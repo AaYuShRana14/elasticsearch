@@ -1,4 +1,5 @@
 const { Client, errors } = require('@elastic/elasticsearch');
+const { default: DeleteApi } = require('@elastic/elasticsearch/lib/api/api/delete');
 const fs = require('fs');
 const client = new Client({
     node: 'https://127.0.0.1:9200',
@@ -64,6 +65,36 @@ async function getDocument({indexname,id}){
         console.log(e);
     }
 }
+async function deleteDocument({indexname,id}){
+    try{
+        const res=await client.delete({
+            index:indexname,
+            id
+        })
+        console.log(res);
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+
+async function updateDocument({indexname,id},{...updatedFields}){
+    try{
+        const res=await client.update({
+            index:indexname,
+            id,
+            body:{
+                doc:updatedFields
+            }
+        })
+        console.log(res);
+    }
+    catch(e){
+        console.log(e);
+    }
+}
 // getDocument({"indexname":'characters',id:'72EKM5EBbam2yBRlZ6hU'})
 // createindex('characters');
 // createDocument({"indexname":'characters',"age":'22',"name":'Jamie',house:'Lannister'})
+// deleteDocument({indexname:'characters',id:'72EKM5EBbam2yBRlZ6hU'})
+// updateDocument({indexname:'characters',id:'7mEAM5EBbam2yBRlQ6jx'},{name:'Jon Snow the king in the north',age:21,house:'stark'})
