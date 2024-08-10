@@ -1,18 +1,4 @@
-const { Client, errors } = require('@elastic/elasticsearch');
-const { default: DeleteApi } = require('@elastic/elasticsearch/lib/api/api/delete');
-const fs = require('fs');
-const client = new Client({
-    node: 'https://127.0.0.1:9200',
-    auth: {
-        username: 'elastic',
-        password: '+xu=jwvrP6eh4jgIDCkt'
-    },
-    tls: {
-        ca: fs.readFileSync('./http_ca.crt'),
-        rejectUnauthorized: false
-    },
-    requestTimeout: 30000 
-});
+const client=require('./Client');
 async function createindex(indexname){
     try{
         const res=await client.indices.create({
@@ -93,8 +79,8 @@ async function updateDocument({indexname,id},{...updatedFields}){
         console.log(e);
     }
 }
-// getDocument({"indexname":'characters',id:'72EKM5EBbam2yBRlZ6hU'})
-// createindex('characters');
+// getDocument({"indexname":'bank'})
+// createindex('bank');
 // createDocument({"indexname":'characters',"age":'22',"name":'Jamie',house:'Lannister'})
 // deleteDocument({indexname:'characters',id:'72EKM5EBbam2yBRlZ6hU'})
 // updateDocument({indexname:'characters',id:'7mEAM5EBbam2yBRlQ6jx'},{name:'Jon Snow the king in the north',age:21,house:'stark'})
