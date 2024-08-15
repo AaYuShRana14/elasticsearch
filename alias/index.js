@@ -23,6 +23,7 @@ async function alias(indexname,aliasName){
     }
 }
 // alias('students','school');
+
 async function createDocument(aliasName,name,age){
     try{
         const res=await client.index({
@@ -37,3 +38,4 @@ async function createDocument(aliasName,name,age){
 }
 // alias('teachers','school');
 // createDocument('school','theon','19');
+
